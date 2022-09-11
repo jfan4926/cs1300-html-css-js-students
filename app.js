@@ -21,36 +21,49 @@ const apiRequest = async () => {
   return response.json();
 }
 
+
 const updatePage = async () => {
   const gallery = document.getElementById('cs1300-gallery');
 
   // Make API request and get an array of fruit objects
   const fruitsArray = await apiRequest();
-  // console.log(fruitsArray);
+   console.log(fruitsArray);
 
   // TODO: Use either `map` and/or `filter` to extract some data from the array of fruit objects
   // For example, find "name of all fruits whose sugar > 15",
-
+  var filtered = fruitsArray.filter(fruit=>{
+    console.log(fruit.nutritions.fat)
+    if(fruit.nutritions.fat > 0.5){
+      return true;
+    }
+  })
+  console.log(filtered)
   // TODO: Create a new HTML element to display your data
 
   // TODO: Append your new element to the page
+  filtered.forEach(function(item,index,array) {
+    console.log(item.name)
+    exampleAddElement(item.name)
+    
+  })
 
 }
 
+
 // SAMPLE CODE of how to create and append a new HTML element to the page
-const exampleAddElement = () => {
+const exampleAddElement = (fruit) => {
   // Create a new HTML element and set its properties
   const newElement = document.createElement('div');
-  newElement.innerHTML = "this text is inside a div";
+  newElement.innerHTML = fruit;
 
   // Append the new element to an existing part of the webpage
-  const existingElement = document.getElementById('example-id');
+  const existingElement = document.getElementById('cs1300-gallery');
   existingElement.append(newElement);
 }
 
 /**
  * To access information in this API, we need to send our requests through a proxy due to CORS restrictions.
- * This will be used as our proxy to avoid CORS issues.
+ * This will be used as ousr proxy to avoid CORS issues.
  */
 // do not touch - stencil code to add the proxy to avoid CORS
 const PROXY_URL = 'https://cs1300-cors-anywhere.herokuapp.com/'
